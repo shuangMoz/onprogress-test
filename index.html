@@ -1,0 +1,29 @@
+<html>
+<head>
+  <script type="text/javascript">
+    function get_ms() {
+      return  new Date().getTime() ;
+    }
+    function clickme(n) {
+      var t1 = get_ms() ;
+      console.log("start"+n );
+      var oReq = new XMLHttpRequest();
+      oReq.open("GET", "tmp"+n+".png", true);
+      oReq.responseType = "arraybuffer";
+      oReq.onprogress = function (event) {
+        console.log("onprogress"+n+" " + event.loaded + "/" + event.total + ", ms=" + (get_ms()-t1) );
+      }
+      oReq.onload = function (event) {
+        console.log("done"+n+" " + oReq.status + ", ms=" + (get_ms()-t1));
+      }
+      oReq.send();
+    }
+  </script>
+</head>
+
+<body>
+ <button onclick="clickme(1)">Click me1</button>
+ <br/>
+ <button onclick="clickme(2)">Click me2</button>
+</body>
+</html>
